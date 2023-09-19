@@ -1,0 +1,30 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<body class="bg-light">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class="flashes container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show"" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close border-right" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+    <div class="col-md-8 order-md-1 container py-5">
+      <h1 class="mb-3">Добавить значение</h1>
+    <form class="needs-validation" novalidate method="post">
+        <div class="form-group">
+            <label for="name" class="sr-only"></label>
+            <input type="text" class="form-control" id="name" name='name' placeholder="Введите название">
+        </div>
+        <br>
+        <button class="btn btn-outline-success" type="submit">Добавить</button>
+        <a href="/nsi" class="btn btn-outline-info">Отменить</a>
+    </form>
+    </div>
+  </body>
+{% endblock %}

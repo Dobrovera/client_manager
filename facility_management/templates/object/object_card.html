@@ -1,0 +1,293 @@
+{% extends 'navbar_obj_card.html' %}
+
+{% block content %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body class="bg-light">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class="flashes container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close border-right" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+<br>
+<div class="container modal-fullscreen text-center">
+    <h1 class="h5 mb-1 font-weight-normal">{{ object_card.name }}</h1>
+</div>
+    <br>
+
+<div class="card-columns container-fluid text-wrap">
+  <div class="card">
+  <h5 class="card-header">Общая информация</h5>
+    <div class="card-body">
+
+        <div class="row p-1 pr-0">
+                <div class="col-4">Название:</div>
+                <div class="col-8 pr-0">{{ object_card.name }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Короткое название:</div>
+                <div class="col-8 pr-0">{{ object_card.short_name }}</div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Ссылка на сайт:</div>
+                <div class="col-8 pr-0">
+                    <a href="{{ object_card.site_link }}" target="_blank">{{ object_card.site_link }}</a>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Актуальный релиз МИС:</div>
+                <div class="col-8 pr-0">{{ object_card.current_release }}</div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Установленные системы/модули:</div>
+                <div class="col-8 pr-0">
+                    <dl class="col-8 p-0">
+                        {% for sys in info_sys %}
+                            <dd>{{ sys.object_info_sys_list.name }}</dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">ВПН/Энидеск до объекта:</div>
+                <div class="col-8 pr-0">
+                    <a href="{{ object_card.vpn_enidesk }}" target="_blank">{{ object_card.vpn_enidesk }}</a>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Ссылка на чат в тадаме с объектом:</div>
+                <div class="col-8 pr-0">
+                    <a href="{{ object_card.tadam_link }}" target="_blank">{{ object_card.tadam_link }}</a>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Ссылка на поиск/доску в ютреке с задачами объекта:</div>
+                <div class="col-8 pr-0">
+                    <a href="{{ object_card.youtrack_link }}" target="_blank">{{ object_card.youtrack_link }}</a>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Особенности выезда на объект:</div>
+                <div class="col-8 pr-0">{{ object_card.departure_specifics }}</div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-4">Ответственный за объект:</div>
+                <div class="col-8 pr-0">{{ executor.last_name }} {{ executor.first_name }} {{ executor.patronymic }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+    <h5 class="card-header">Список адресов зданий объекта</h5>
+        <div class="card-body">
+        {% for address in addresses %}
+        <div class="row p-1">
+                <div class="col-4">Адрес:</div>
+                <div class="col-8">{{ address.address }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Комментарий:</div>
+                <div class="col-8">{{ address.comment }}</div>
+        </div>
+            <hr class="mt-1 mb-1 bg-dark">
+       {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+    <h5 class="card-header">Тип объекта</h5>
+        <div class="card-body">
+        <div class="row p-1">
+                <div class="col-4">Тип объекта:</div>
+                <div class="col-8">{{ object_type.object_obj_type.name }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Особенности:</div>
+                <div class="col-8">{{ object_type.comment }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card ">
+      <h5 class="card-header">Инсталляция</h5>
+        <div class="card-body">
+        {% for inst in instal %}
+        <div class="row p-1">
+                <div class="col-4">Инсталляция:</div>
+                <div class="col-8">{{ inst.object_installation.name }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Примечания:</div>
+                <div class="col-8">{{ inst.comment }}</div>
+        </div>
+        <hr class="mt-1 mb-1 bg-dark">
+       {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">Финансовые особенности объекта</h5>
+        <div class="card-body">
+        <div class="row p-1">
+                <div class="col-4">Фин. особенности:</div>
+                <div class="col-8">{{ object_card.financial_features }}</div>
+        </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">Список выездов на объект</h5>
+        <div class="card-body">
+        {% for visit in visits %}
+        <div class="row p-1">
+                <div class="col-4">Специалист:</div>
+                <div class="col-8 p-0">
+                    <dl class="col-8">
+                        {% for specialist in visit_specialists %}
+                            {% if specialist.obj_vis_list_id == visit.id %}
+                                <dd>{{ specialist.object_specialist_visit_list.last_name }} {{ specialist.object_specialist_visit_list.first_name }} {{ specialist.object_specialist_visit_list.patronymic }}</dd>
+                            {% endif %}
+                        {% endfor %}
+                    </dl>
+                </div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Дата выезда:</div>
+                <div class="col-8">{{ visit.departure_date.strftime('%d-%m-%Y') }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Причина выезда:</div>
+                <div class="col-8">{{ visit.departure_reason }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Резюме по выезду:</div>
+                <div class="col-8">{{ visit.comment }}</div>
+        </div>
+            <hr class="mt-1 mb-1 bg-dark">
+       {% endfor %}
+        </div>
+    </div>
+
+   <div class="card">
+       <h5 class="card-header">Детальный список модулей</h5>
+        <div class="card-body">
+
+        {% for module in modules_list %}
+        <div class="row p-1">
+                <div class="col-4">Модуль:</div>
+                <div class="col-8">{{ module.object_modules_list.name }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Дата запуска:</div>
+                <div class="col-8">{{ module.launch_date.strftime('%d-%m-%Y') }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Ссылка на лог:</div>
+                <div class="col-8">
+                    <a href="{{ module.log_link }}" target="_blank">{{ module.log_link }}</a>
+                </div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Примечания:</div>
+                <div class="col-8">{{ module.comment }}</div>
+        </div>
+            <hr class="mt-1 mb-1 bg-dark">
+       {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+       <h5 class="card-header">Таблица актуальных данных по СЭМД/СМС</h5>
+        <div class="card-body">
+        {% if semd_sms %}
+            {% for sms in semd_sms %}
+             <div class="row p-1">
+                     <div class="col-4">СЭМД/СМС:</div>
+                     <div class="col-8">{{ sms.object_semd_sms.name }}</div>
+             </div>
+
+             <div class="row p-1">
+                     <div class="col-4">Статус:</div>
+                     <div class="col-8">{{ sms.object_sem_sms.name }}</div>
+             </div>
+
+           {% if sms.launch_date %}
+             <div class="row p-1">
+                     <div class="col-4">Дата запуска:</div>
+                     <div class="col-8">{{ sms.launch_date.strftime('%d-%m-%Y') }}</div>
+             </div>
+           {% endif %}
+
+                 <hr class="mt-1 mb-1 bg-dark">
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">Список проблем на объекте</h5>
+        <div class="card-body">
+
+        {% for problem in problems %}
+        <div class="row p-1">
+                <div class="col-4">Кратко:</div>
+                <div class="col-8 pr-0">{{ problem.description }}</div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Ссылка на задачу:</div>
+                <div class="col-8">
+                    <a href="{{ problem.task_link }}" target="_blank">{{ problem.task_link }}</a>
+                </div>
+        </div>
+
+        <div class="row p-1">
+                <div class="col-4">Дедлайн:</div>
+                <div class="col-8">{{ problem.deadline.strftime('%d-%m-%Y') }}</div>
+        </div>
+
+
+        <div class="row p-1">
+                <div class="col-4">Актуальность:</div>
+                {% if problem.actuality %}
+                    <div class="col-8">Да</div>
+                {% else %}
+                    <div class="col-8">Нет</div>
+                {% endif %}
+        </div>
+            <hr class="mt-1 mb-1 bg-dark">
+       {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+</body>
+{% endblock %}

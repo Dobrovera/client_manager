@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+    <title>Vista</title>
+</head>
+ <nav class="navbar navbar-expand-md navbar-light bg-light">
+   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <form action="/logout" method="post">
+                <li class="nav-item">
+                     <input class="btn nav-link" type="submit" value="Выйти">
+                </li>
+            </form>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">Пользователи</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/objects">Объекты</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/nsi">НСИ</a>
+                </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                   <div class="container-fluid">
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Выезд</button>
+                    </div>
+                        <br>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel">Добавить выезд на объект {{ object_card.short_name }}</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                          </div>
+
+                          <div class="modal-body">
+                              <form action="" method="post">
+
+                                  <div class="form-group" id="multiple_select_form">
+                                      <select class="form-control selectpicker" data-live-search="true" multiple name="user_visit_id" id="user_visit_id">
+                                          {% for user in users %}
+                                              <option value="{{ user.id }}">{{ user.last_name}} {{ user.first_name }} {{ user.patronymic }}</option>
+                                          {% endfor %}
+                                      </select>
+                                  </div>
+
+                                  <div class="row justify-content">
+                                      <div>
+                                          <label for="departure_date">Дата выезда</label>
+                                          <input id="departure_date" name="departure_date" class="form-control" type="date" />
+                                      </div>
+                                  </div>
+                                <br>
+                                  <div class="form-group">
+                                      <label for="departure_reason">Причина выезда</label>
+                                      <input type="text" class="form-control" id="departure_reason" name="departure_reason" placeholder="">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="departure_comment">Резюме по выезду</label>
+                                      <textarea type="text" class="form-control" id="departure_comment" name="departure_comment" placeholder=""></textarea>
+                                  </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary" name='btn' value='departure'>Сохранить</button>
+                          </div>
+                              </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                   <div class="text-right">
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#sms">СЭМД/СМС</button>
+                    </div>
+                        <br>
+
+                    <div class="modal fade" id="sms" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel">Добавить данные по СЭМД/СМС</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                          </div>
+
+                          <div class="modal-body">
+                              <form action="" method="post">
+                              <div class="form-group" id="multiple_select_form">
+                                <select class="form-control selectpicker" data-live-search="true" name="sms_id" id="sms_id">
+                                    {% for s in sms %}
+                                        <option value="{{ s.id }}">{{ s.name }}</option>
+                                    {% endfor %}
+                                </select>
+                              </div>
+
+                              <div class="form-group" id="multiple_select_form">
+                                  <label>Статус</label>
+                                <select class="form-select selectpicker" name="status_id" id="status_id">
+                                    {% for status in statuses %}
+                                        <option value="{{ status.id }}">{{ status.name }}</option>
+                                    {% endfor %}
+                                </select>
+                              </div>
+
+                            <div class="row justify-content">
+                                <div>
+                                    <label for="sms_launch_date">Дата запуска</label>
+                                    <input id="sms_launch_date" name="sms_launch_date" class="form-control" type="date" />
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <button type="submit" name='btn' value='sms' class="btn btn-primary">Сохранить</button>
+                            </div>
+                              </form>
+                          </div>
+                      </div>
+                    </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                   <div class="container-fluid">
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#module">Модуль</button>
+                    </div>
+                        <br>
+
+                    <div class="modal fade" id="module" tabindex="-1" aria-labelledby="moduleLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="moduleLabel">Добавить модуль</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                          </div>
+
+                          <div class="modal-body">
+                              <form action="" method="post">
+
+                                  <div class="form-group" id="multiple_select_form">
+                                       <select class="form-control selectpicker" name="module_id" id="module_id">
+                                        {% for module in modules %}
+                                             <option value="{{ module.id }}">{{ module.name }}</option>
+                                        {% endfor %}
+                                       </select>
+                                  </div>
+
+                                  <div class="row justify-content">
+                                      <div>
+                                          <label for="module_launch_date">Дата запуска модуля</label>
+                                          <input id="module_launch_date" name="module_launch_date" class="form-control" type="date" />
+                                      </div>
+                                  </div>
+                                <br>
+                                  <div class="form-group">
+                                      <label for="module_log_link">Ссылка на лог модуля (или объяснение, где найти логи модуля в программах)</label>
+                                      <input type="text" class="form-control" id="module_log_link" name="module_log_link" placeholder="">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="module_comment">Примечания</label>
+                                      <textarea type="text" class="form-control" id="module_comment" name="module_comment" placeholder=""></textarea>
+                                  </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary" name='btn' value='module'>Сохранить</button>
+                          </div>
+                              </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                   <div>
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#installation">Инсталляция</button>
+                    </div>
+                        <br>
+
+                    <div class="modal fade" id="installation" tabindex="-1" aria-labelledby="installationLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="einstallationLabel">Добавить инсталляцию</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                          </div>
+
+                          <div class="modal-body">
+                              <form action="" method="post">
+
+                                  <div class="form-group" id="multiple_select_form">
+                                      <select class="form-control selectpicker" name="mis_id" id="mis_id">
+                                        {% for mis in mis_type %}
+                                            <option value="{{ mis.id }}">{{ mis.name }}</option>
+                                        {% endfor %}
+                                      </select>
+                                  </div>
+
+                                  <div class="row justify-content">
+                                      <div>
+                                          <label for="mis_comment">Примечания к инсталляции</label>
+                                          <textarea type="text" class="form-control" id="mis_comment" name="mis_comment" placeholder=""></textarea>
+                                      </div>
+                                  </div>
+                                <br>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary" name='btn' value='installation'>Сохранить</button>
+                          </div>
+                              </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </li>
+
+        </ul>
+   </div>
+ </nav>
+{% block content %}
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

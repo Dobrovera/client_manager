@@ -1,0 +1,44 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<body class="text-center">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class=flashes>
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+<br>
+<br>
+<div class="container w-50">
+<div class="card text-lg-left" style="width: 40rem;align:center;">
+    <div class="card-body">
+      <div class="card-header">
+        <h1 class="h1 mb-1 font-weight-normal">Войти</h1>
+        <form action="" method="POST">
+                <div class="mb-1">
+                      <label for="username" class="sr-only"></label>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                </div>
+
+                <div class="mb-1">
+                      <label for="password" class="form-label"></label>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
+                </div>
+
+            <br>
+          <button class=" btn btn-primary" type="submit">Войти</button>
+
+        </form>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+{% endblock %}

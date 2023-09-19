@@ -1,0 +1,46 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<body class="bg-light">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class="flashes container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close border-right" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+  <div class="container wrapper flex-grow-1">
+      <h1 class="my-4">Пользователи</h1>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ФИО</th>
+              <th scope="col">username</th>
+              <th scope="col">Профиль</th>
+              <th scope="col"> </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for user in users %}
+            <tr>
+              <th scope="row">{{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}</th>
+              <td>{{ user.username }}</td>
+              <td>{{ user.u.profile_name }}</td>
+              <td>
+                <a href="/{{ user.id }}/update" class="btn btn-outline-warning">Изменить</a>
+                <a href="/{{ user.id }}/delete" class="btn btn-outline-danger">Удалить</a>
+              </td>
+
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <a href="/users/add" class="btn btn-outline-success">Добавить</a>
+  </div>
+</body>
+{% endblock %}

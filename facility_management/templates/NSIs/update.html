@@ -1,0 +1,30 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+
+<div class="col-md-8 order-md-1 container py-5">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class="flashes container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close border-right" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+    <h1 class="mt-1">Изменить значение "{{ nsi.name }}"</h1>
+    <form action="" method="POST">
+    <div class="mb-1">
+        <label for="name" class="sr-only"></label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Введите новое значение">
+    </div>
+        <br>
+        <button class="btn btn-warning" type="submit">Изменить</button>
+        <a href="/nsi/{{ ref }}" class="btn btn-info">Отменить</a>
+    </form>
+
+</div>
+{% endblock %}

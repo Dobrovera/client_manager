@@ -1,0 +1,40 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<body class="bg-light">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class="flashes container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close border-right" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+  <div class="container wrapper flex-grow-1">
+      <h1 class="my-4">Объекты</h1>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th class="col-8">Полное наименование</th>
+              <th class="col-2">Краткое название</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for obj in object_obj %}
+            <tr>
+              <td>
+                  <a href="/objects/{{ obj.id }}">{{ obj.name }}</a>
+              </td>
+              <td>{{ obj.short_name }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <a href="/objects/add" class="btn btn-outline-success">Добавить</a>
+  </div>
+</body>
+{% endblock %}

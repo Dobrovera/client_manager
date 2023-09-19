@@ -1,0 +1,66 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<body class="bg-light">
+{% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            <ul class="flashes container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show"" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close border-right" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+  <div class="container wrapper flex-grow-1">
+      <h1 class="my-4">НСИ</h1>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">№</th>
+              <th scope="col">Название</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                  <a href="/nsi/object_type">Тип объекта</a>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                  <a href="/nsi/mis_type">Тип МИС</a>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>
+                  <a href="/nsi/info_system">Информационные системы</a>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>
+                  <a href="/nsi/modules">Модули</a>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>
+                  <a href="/nsi/semd_sms">СЭМД/СМС</a>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>
+                  <a href="/nsi/statuses">Статусы</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+</body>
+{% endblock %}
